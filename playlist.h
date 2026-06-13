@@ -1,5 +1,5 @@
-#ifndef PROJETO_H
-#define PROJETO_H
+#ifndef PLAYLIST_H
+#define PLAYLIST_H
 
 // Declaração da struct
 

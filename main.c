@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "projeto.h"
+#include "playlist.h"
 
 // Chamada das funções e desenvolvimento do programa principal
 
