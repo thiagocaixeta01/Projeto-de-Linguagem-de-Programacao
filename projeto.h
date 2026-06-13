@@ -3,4 +3,7 @@
 
 // Declaração das funções e structs
 
+void menu();
+void escolherOpcao();
+
 #endif

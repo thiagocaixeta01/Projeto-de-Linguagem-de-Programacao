@@ -4,5 +4,5 @@
 // Chamada das funções e desenvolvimento do programa principal
 
 int main() {
-    
+    menu();
 }
