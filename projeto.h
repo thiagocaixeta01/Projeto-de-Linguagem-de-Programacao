@@ -4,6 +4,6 @@
 // Declaração das funções e structs
 
 void menu();
-void escolherOpcao();
+int escolherOpcao();
 
 #endif
