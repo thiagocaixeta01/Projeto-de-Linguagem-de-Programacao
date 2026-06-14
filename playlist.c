@@ -15,9 +15,9 @@ void menu(){
     printf("   ==================================================\n");
 
     printf("\t+------ Escolha a opção desejada ------+\n");
-    printf("\t|\t 1 - Novo registro             |\n");
-    printf("\t|\t 2 - Ler registro              |\n");
-    printf("\t|\t 3 - Remover registro          |\n");
+    printf("\t|\t 1 - Nova Música               |\n");
+    printf("\t|\t 2 - Listar Músicas            |\n");
+    printf("\t|\t 3 - Remover Música            |\n");
     printf("\t+--------------------------------------+\n");
 }
 
