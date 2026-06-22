@@ -15,6 +15,7 @@ typedef struct No Track;
 // Declaração das funções
 
 void menu();
+void loopMenu();
 int escolherOpcao();
 
 void inicializarPlaylist(Track **inicio_lista, Track **fim_lista);
@@ -23,7 +24,8 @@ void dadosMusica(Musica *m);
 void listarMusicas(Track *inicio);
 void removerMusica(Track **inicio, Track **fim, char titulo_busca[]);
 
-void salvarPlaylist(Track *inicio, const char *nome_arquivo);
+int lerPlaylist(Track *inicio, const char *nome_arquivo);
+void escreverPlaylist(Track *inicio, const char *nome_arquivo, int total_musicas);
 void carregarPlaylist(Track **inicio, Track **fim, const char *nome_arquivo);
 
 void liberarPlaylist(Track **inicio, Track **fim);

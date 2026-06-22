@@ -33,6 +33,46 @@ int escolherOpcao(){
     return opcao;
 }
 
+void loopMenu() {
+    Track *inicio, *fim;
+    
+    int opcao;    
+    Musica m;
+    char titulo_busca[100];
+
+     do {
+        menu();
+        opcao = escolherOpcao();
+
+        switch (opcao) {
+            case 1:
+                dadosMusica(&m);
+                adicionarMusica(&inicio, &fim, m);
+                break;
+                
+            case 2:
+                listarMusicas(inicio);
+                break;
+                
+            case 3:
+                printf("Digite o título da música a ser removida: ");
+                fgets(titulo_busca, sizeof(titulo_busca), stdin);
+                titulo_busca[strcspn(titulo_busca, "\n")] = '\0';
+
+                removerMusica(&inicio, &fim, titulo_busca);      
+                break;
+
+            case 0:
+                printf("Encerrando a playlist...\n");
+                break;
+
+            default:
+                printf("Opção inválida! Por favor, escolha uma opção válida.\n");
+                break;
+        }
+    } while (opcao != 0);
+}
+
 void inicializarPlaylist(Track **inicio_lista, Track **fim_lista){
 
     *inicio_lista = NULL;
@@ -135,6 +175,25 @@ void removerMusica(Track **inicio, Track **fim, char titulo_busca[]){
     
     printf("\nMúsica (%s) removida da playlist!\n", titulo_busca);
 
+}
+
+int lerPlaylist(Track *inicio, const char *nome_arquivo) {
+    FILE *arquivo = fopen(nome_arquivo, "rb");
+    if (arquivo == NULL) {
+        printf("Arquivo (%s) não entrado!\n", nome_arquivo);
+        return 0;
+    }
+
+    Track *atual = inicio;
+    int total_musicas = 0;
+    Musica m;
+    while (fread(&m, sizeof(Musica), 1, arquivo) == 1) {
+        
+        total_musicas++;
+    }
+    
+    fclose(arquivo);
+    return total_musicas;
 }
 
 void liberarPlaylist(Track **inicio, Track **fim){
