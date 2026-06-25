@@ -1,7 +1,7 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 
-// DeclaraÃ§Ã£o da struct
+// Declaração da struct
 
 typedef struct {
     char titulo[100];
@@ -11,17 +11,24 @@ typedef struct {
 } Musica;
 
 typedef struct No Track;
-// DeclaraÃ§Ã£o das funÃ§Ãµes
+
+// Declaração das funções
 
 void menu();
+void loopMenu();
 int escolherOpcao();
 
-void inicializarPlaylist(Track *inicio_lista, Track *fim_lista);
+void inicializarPlaylist(Track **inicio_lista, Track **fim_lista);
 void adicionarMusica(Track **inicio, Track **fim, Musica m);
+void dadosMusica(Musica *m);
 void listarMusicas(Track *inicio);
-void removerMusica(Track **inicio, char titulo[], char artista[], char album, int ano);
+void removerMusica(Track **inicio, Track **fim, char titulo_busca[]);
 
-void liberarPlaylist(Track **inicio);
+int lerPlaylist(Track *inicio, const char *nome_arquivo);
+void escreverPlaylist(Track *inicio, const char *nome_arquivo, int total_musicas);
+void carregarPlaylist(Track **inicio, Track **fim, const char *nome_arquivo);
+
+void liberarPlaylist(Track **inicio, Track **fim);
 
 
 #endif

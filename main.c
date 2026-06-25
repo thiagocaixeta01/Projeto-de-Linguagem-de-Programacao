@@ -1,15 +1,21 @@
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "playlist.h"
 
-// Chamada das funÃ§Ãµes e desenvolvimento do programa principal
+// Chamada das funções e desenvolvimento do programa principal
 
 int main() {
-
-    Track *inicio_lista;
-    Track *fim_lista;
+    setlocale(LC_ALL, "Portuguese");
     
-    menu();
-    escolherOpcao();
+    char *arquivo = "Playlist.bin";
+    Track *inicio, *fim;
+    inicializarPlaylist(&inicio, &fim);
+
+    loopMenu();
+    
+    liberarPlaylist(&inicio, &fim);
+    
+    return 0;
 }
