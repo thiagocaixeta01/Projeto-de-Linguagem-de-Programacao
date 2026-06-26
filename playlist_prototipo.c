@@ -17,58 +17,6 @@ typedef struct Track{
 
 Track *lista = NULL;
 
-void menu(){
-
-    int opcao;
-
-    do{
-    printf("   ==================================================\n");
-    printf("   Bem vindo ao sistema de gerenciamento de registros\n");
-    printf("   ==================================================\n");
-
-    printf("\t+------ Escolha a opção desejada ------+\n");
-    printf("\t|\t 1 - Novo registro             |\n");
-    printf("\t|\t 2 - Ler registro              |\n");
-    printf("\t|\t 3 - Remover registro          |\n");
-    printf("\t+--------------------------------------+\n");
-
-    printf("\nEscolha uma opção: ");
-    scanf("%d", &opcao);
-
-        switch (opcao) {
-            case 1:
-                
-                printf("\nAdicionando música...\n");
-
-                break;
-            
-            case 2:
-                
-                printf("\nLendo música...\n");
-
-                break;
-            
-            case 3:
-                printf("\nDigite o título da música a ser removida: ");
-                
-                printf("\nRemovendo música...\n");
-
-                break;
-
-            case 0:
-                printf("\nEncerrando a playlist...\n");
-                break;
-
-            default:
-                printf("\nOpção inválida! Por favor, escolha uma opção válida.\n");
-                break;
-        }
-
-    } while (opcao != 0);
-    
-}
-
-
 void carregarPlaylist(char *playlist){
 
     FILE *pl = fopen(playlist, "rb");
@@ -138,12 +86,14 @@ void adicionarMusica(Track **lista, int conta_musica){
     nova->prox = *lista;
     (*lista) = nova;
 
+    printf("Música adicionada com sucesso!\n");
+
 }
 
 void removerMusica(Track **lista, int indice){
 
     if(*lista == NULL){
-        printf("A lista está vazia!\n");
+        printf("Playlist vazia!\n");
         return;
     }
 
@@ -153,7 +103,6 @@ void removerMusica(Track **lista, int indice){
         printf("Removendo a música de índice [%d]...\n", atual->musica.indice);
         *lista = atual->prox;
         free(atual);
-        return;
 
         int conta_musica = contarLista(*lista);
         Track *percorre = *lista;
@@ -161,6 +110,8 @@ void removerMusica(Track **lista, int indice){
             percorre->musica.indice = conta_musica--;
             percorre = percorre->prox;
         }
+
+        return;
     }
 
     Track *posterior = atual->prox;
@@ -174,6 +125,13 @@ void removerMusica(Track **lista, int indice){
         printf("Removendo a música de índice [%d]...\n", indice);
         atual->prox = posterior->prox;
         free(posterior);
+
+        int conta_musica = contarLista(*lista);
+        Track *percorre = *lista;
+        while(percorre != NULL){
+            percorre->musica.indice = conta_musica--;
+            percorre = percorre->prox;
+        }
     }else{
         printf("Indice de música [%d] não encontrado!\n", indice);
     }
@@ -201,7 +159,7 @@ void liberarPlaylist(Track **lista){
     Track *atual = *lista;
 
     if(atual == NULL){
-        printf("Playlist já está vazia!\n");
+        printf("Playlist vazia!\n");
         return;
     }
 
@@ -216,28 +174,90 @@ void liberarPlaylist(Track **lista){
     printf("fechando...\n");
 }
 
+void salvarPlaylist(Track *lista, char *playlist){
+
+    FILE *pl = fopen(playlist, "wb");
+    if(pl == NULL){
+        printf("Arquivo %s não encontrado!\n", playlist);
+        return;
+    }
+
+    Track *atual = lista;
+
+    while(atual != NULL){
+        fwrite(&atual->musica, sizeof(Musica), 1, pl);
+        atual = atual->prox;
+    }
+
+    fclose(pl);
+    printf("Salvando e ");
+}
+
+void menu(char *arquivo){
+
+    int opcao;
+
+    do{
+    printf("   ==================================================\n");
+    printf("   Bem vindo ao sistema de gerenciamento de registros\n");
+    printf("   ==================================================\n");
+
+    printf("\t+------ Escolha a opção desejada ------+\n");
+    printf("\t|\t 1 - Adicionar música          |\n");
+    printf("\t|\t 2 - Exibir playlist           |\n");
+    printf("\t|\t 3 - Remover música            |\n");
+    printf("\t|\t 0 - Sair                      |\n");
+    printf("\t+--------------------------------------+\n");
+
+    printf("\nEscolha uma opção: ");
+    scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                
+                printf("\nAdicionando música...\n");
+                getchar();
+                int conta = contarLista(lista);
+                adicionarMusica(&lista, conta);
+
+                break;
+            
+            case 2:
+                
+                printf("\nExibindo playlist...\n");
+                exibirPlaylist(lista);
+
+                break;
+            
+            case 3:
+                
+                int i;
+                printf("\nInforme o índice da música...\n");
+                scanf("%d", &i);
+                removerMusica(&lista, i);
+
+                break;
+
+            case 0:
+                salvarPlaylist(lista, arquivo);
+                liberarPlaylist(&lista);
+                break;
+
+            default:
+                printf("\nOpção inválida! Por favor, escolha uma opção válida.\n");
+                break;
+        }
+
+    } while (opcao != 0);
+    
+}
+
 int main(){
 
-    //menu();
     char *arquivo = "playlist.bin";
-
     carregarPlaylist(arquivo);
-    int conta = contarLista(lista);
-    adicionarMusica(&lista, conta);
-    conta = contarLista(lista);
-    adicionarMusica(&lista, conta);
-    conta = contarLista(lista);
-    adicionarMusica(&lista, conta);
-    exibirPlaylist(lista);
-    removerMusica(&lista, 4);
-    exibirPlaylist(lista);
-    removerMusica(&lista, 6);
-    exibirPlaylist(lista);
-    conta = contarLista(lista);
-    adicionarMusica(&lista, conta);
-    exibirPlaylist(lista);
-    liberarPlaylist(&lista);
 
+    menu(arquivo);
 
     return 0;
 }
