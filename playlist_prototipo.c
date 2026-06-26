@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <locale.h>
 
 typedef struct Musica{
     int indice;
@@ -214,7 +213,7 @@ void menu(Track **lista, char *nome_arquivo){
             }
             case 2:
 
-                printf("\nLendo música...\n");
+                printf("\nLendo músicas...\n");
                 if (*lista == NULL){
                     printf("A playlist está vazia!\n");
                 } else {
@@ -249,7 +248,6 @@ void menu(Track **lista, char *nome_arquivo){
 }
 
 int main(){
-    setlocale(LC_ALL, "Portuguese");
 
     Track *minha_lista = NULL;
     char *arquivo = "playlist.bin";
