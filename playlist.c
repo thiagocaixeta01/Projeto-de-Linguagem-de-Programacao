@@ -3,7 +3,7 @@
 #include <string.h>
 #include "playlist.h"
 
-// Implementação das funções
+// Implementa??o das fun??es
 typedef struct No {
     Musica musica;
     struct No *prox;
@@ -12,13 +12,13 @@ typedef struct No {
 void menu(){
     printf("\n");
     printf("    ================================================\n");
-    printf("    Bem vindo ao sistema de gerenciamento de músicas\n");
+    printf("    Bem vindo ao sistema de gerenciamento de m?sicas\n");
     printf("    ================================================\n");
 
-    printf("\n\t+------ Escolha a opção desejada ------+\n");
-    printf("\t|\t 1 - Adicionar Música          |\n");
-    printf("\t|\t 2 - Listar Músicas            |\n");
-    printf("\t|\t 3 - Remover Música            |\n");
+    printf("\n\t+------ Escolha a op??o desejada ------+\n");
+    printf("\t|\t 1 - Adicionar M?sica          |\n");
+    printf("\t|\t 2 - Listar M?sicas            |\n");
+    printf("\t|\t 3 - Remover M?sica            |\n");
     printf("\t|\t 0 - Sair                      |\n");
     printf("\t+--------------------------------------+\n");
 }
@@ -26,7 +26,7 @@ void menu(){
 int escolherOpcao(){
     int opcao;
 
-    printf("\nEscolha uma opção: ");
+    printf("\nEscolha uma op??o: ");
     scanf("%d", &opcao);
     getchar();
 
@@ -55,7 +55,7 @@ void loopMenu() {
                 break;
                 
             case 3:
-                printf("Digite o título da música a ser removida: ");
+                printf("Digite o t?tulo da m?sica a ser removida: ");
                 fgets(titulo_busca, sizeof(titulo_busca), stdin);
                 titulo_busca[strcspn(titulo_busca, "\n")] = '\0';
 
@@ -67,7 +67,7 @@ void loopMenu() {
                 break;
 
             default:
-                printf("Opção inválida! Por favor, escolha uma opção válida.\n");
+                printf("Op??o inv?lida! Por favor, escolha uma op??o v?lida.\n");
                 break;
         }
     } while (opcao != 0);
@@ -85,7 +85,7 @@ void adicionarMusica(Track **inicio, Track **fim, Musica m){
     Track *nova_track = (Track*)malloc(sizeof(Track));
 
     if(nova_track == NULL){
-        printf("Erro na alocação de memória!\n");
+        printf("Erro na aloca??o de mem?ria!\n");
         return;
     }
 
@@ -100,13 +100,13 @@ void adicionarMusica(Track **inicio, Track **fim, Musica m){
 
     *fim = nova_track;
 
-    printf("\nMúsica (%s) adicionada à playlist com sucesso!\n", m.titulo);
+    printf("\nM?sica (%s) adicionada ? playlist com sucesso!\n", m.titulo);
 
 }
 
 void dadosMusica(Musica *m){
 
-    printf("\t-> Digite o título da música: ");
+    printf("\t-> Digite o t?tulo da m?sica: ");
     fgets(m->titulo, sizeof(m->titulo), stdin);
     m->titulo[strcspn(m->titulo, "\n")] = '\0';
 
@@ -114,11 +114,11 @@ void dadosMusica(Musica *m){
     fgets(m->artista, sizeof(m->artista), stdin);
     m->artista[strcspn(m->artista, "\n")] = '\0';
 
-    printf("\t-> Digite o nome do álbum: ");
+    printf("\t-> Digite o nome do ?lbum: ");
     fgets(m->album, sizeof(m->album), stdin);
     m->album[strcspn(m->album, "\n")] = '\0';
 
-    printf("\t-> Digite o ano de lançamento: ");
+    printf("\t-> Digite o ano de lan?amento: ");
     scanf("%d", &m->ano);
     getchar();
 
@@ -129,12 +129,12 @@ void listarMusicas(Track *inicio){
     Track *atual = inicio;
 
     if(atual == NULL){
-        printf("\nA Playlist está vazia!\n");
+        printf("\nA Playlist est? vazia!\n");
         return;
     }
 
     while(atual != NULL){
-        printf("Título: %s || Artista: %s || Album: %s || Ano: %d", atual->musica.titulo, atual->musica.artista, atual->musica.album, atual->musica.ano);
+        printf("T?tulo: %s || Artista: %s || Album: %s || Ano: %d", atual->musica.titulo, atual->musica.artista, atual->musica.album, atual->musica.ano);
         atual = atual->prox;
     }
 
@@ -157,7 +157,7 @@ void removerMusica(Track **inicio, Track **fim, char titulo_busca[]){
     }
 
     if (atual == NULL) {
-        printf("\nMúsica (%s) não foi encontrada na playlist!\n", titulo_busca);
+        printf("\nM?sica (%s) n?o foi encontrada na playlist!\n", titulo_busca);
         return;
     }
 
@@ -173,14 +173,14 @@ void removerMusica(Track **inicio, Track **fim, char titulo_busca[]){
     
     free(atual);
     
-    printf("\nMúsica (%s) removida da playlist!\n", titulo_busca);
+    printf("\nM?sica (%s) removida da playlist!\n", titulo_busca);
 
 }
 
 int lerPlaylist(Track *inicio, const char *nome_arquivo) {
     FILE *arquivo = fopen(nome_arquivo, "rb");
     if (arquivo == NULL) {
-        printf("Arquivo (%s) não entrado!\n", nome_arquivo);
+        printf("Arquivo (%s) n?o entrado!\n", nome_arquivo);
         return 0;
     }
 
