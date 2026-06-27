@@ -15,15 +15,6 @@ typedef struct Track{
     struct Track *prox;
 }Track;
 
-int contarLista(Track *lista);
-void informarMusica(Musica *m);
-void adicionarMusica(Track **lista, int conta_musica);
-void removerMusica(Track **lista, int indice);
-void exibirPlaylist(Track *lista);
-void carregarPlaylist(char *playlist, Track **lista);
-void salvarPlaylist(char *playlist, Track *lista);
-void liberarPlaylist(Track **lista);
-
 void carregarPlaylist(char *playlist, Track **lista){
 
     FILE *pl = fopen(playlist, "rb");
@@ -41,7 +32,6 @@ void carregarPlaylist(char *playlist, Track **lista){
     }
 
     fclose(pl);
-
 }
 
 void salvarPlaylist(char *playlist, Track *lista) {
@@ -189,14 +179,14 @@ void menu(Track **lista, char *nome_arquivo){
     int opcao;
 
     do{
-    printf("   ==================================================\n");
-    printf("   Bem vindo ao sistema de gerenciamento de registros\n");
-    printf("   ==================================================\n");
+    printf("    =================================================\n");
+    printf("    Bem vindo ao sistema de gerenciamento da playlist\n");
+    printf("    =================================================\n");
 
     printf("\t+------ Escolha a opção desejada ------+\n");
-    printf("\t|\t 1 - Novo registro             |\n");
-    printf("\t|\t 2 - Ler registro              |\n");
-    printf("\t|\t 3 - Remover registro          |\n");
+    printf("\t|\t 1 - Nova Música               |\n");
+    printf("\t|\t 2 - Listar Playlist           |\n");
+    printf("\t|\t 3 - Remover Música            |\n");
     printf("\t|\t 0 - Sair                      |\n");
     printf("\t+--------------------------------------+\n");
     
@@ -214,11 +204,7 @@ void menu(Track **lista, char *nome_arquivo){
             case 2:
 
                 printf("\nLendo músicas...\n");
-                if (*lista == NULL){
-                    printf("A playlist está vazia!\n");
-                } else {
-                    exibirPlaylist(*lista);
-                }
+                exibirPlaylist(*lista);
                 break;
             
             case 3:
@@ -249,14 +235,14 @@ void menu(Track **lista, char *nome_arquivo){
 
 int main(){
 
-    Track *minha_lista = NULL;
+    Track *lista = NULL;
     char *arquivo = "playlist.bin";
 
-    carregarPlaylist(arquivo, &minha_lista);
+    carregarPlaylist(arquivo, &lista);
 
-    menu(&minha_lista, arquivo);
+    menu(&lista, arquivo);
 
-    liberarPlaylist(&minha_lista);
+    liberarPlaylist(&lista);
 
 
     return 0;
